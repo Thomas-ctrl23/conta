@@ -26,68 +26,7 @@ function loadState() {
       state.employees = [];
     }
   } else {
-    // Initial demo data with realistic values
-    state.employees = [
-      {
-        id: '1',
-        name: 'Alejandro Mendoza',
-        basicSalary: 5500,
-        form110: 150,
-        bonuses: [
-          {
-            id: 'b1',
-            type: 'seniority',
-            name: 'Bono de Antigüedad',
-            years: 6,
-            amount: 0
-          },
-          {
-            id: 'b2',
-            type: 'custom',
-            name: 'Bono Pasaje',
-            years: 0,
-            amount: 350
-          }
-        ]
-      },
-      {
-        id: '2',
-        name: 'Gabriela Torrico',
-        basicSalary: 8200,
-        form110: 450,
-        bonuses: [
-          {
-            id: 'b3',
-            type: 'custom',
-            name: 'Bono de Producción',
-            years: 0,
-            amount: 1500
-          }
-        ]
-      },
-      {
-        id: '3',
-        name: 'Carlos Villarroel',
-        basicSalary: 4200,
-        form110: 0,
-        bonuses: [
-          {
-            id: 'b4',
-            type: 'custom',
-            name: 'Bono de Ventas',
-            years: 0,
-            amount: 800
-          }
-        ]
-      },
-      {
-        id: '4',
-        name: 'Mariana Siles',
-        basicSalary: 3800,
-        form110: 0,
-        bonuses: []
-      }
-    ];
+    state.employees = [];
   }
 
   // Set default minimum salary to 3300 if stored value is old one or empty
