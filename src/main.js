@@ -446,7 +446,7 @@ function renderApp() {
                             </div>
                           </div>
                         </td>
-                        <td class="text-right">Bs. ${emp.basicSalary.toFixed(2)}</td>
+                        <td data-label="Haber Básico" class="text-right">Bs. ${emp.basicSalary.toFixed(2)}</td>
                         
                         <!-- Dynamic Bonus Cell Values -->
                         ${bonusCols.map(col => {
@@ -456,13 +456,13 @@ function renderApp() {
                           });
                           const val = b ? b.calculatedAmount : 0;
                           return `
-                            <td class="text-right" style="color: ${val > 0 ? 'var(--primary)' : 'var(--text-muted)'}">
+                            <td data-label="${col}" class="text-right" style="color: ${val > 0 ? 'var(--primary)' : 'var(--text-muted)'}">
                               Bs. ${val.toFixed(2)}
                             </td>
                           `;
                         }).join('')}
 
-                        <td class="text-right" style="font-weight: 700; color: var(--primary)">Bs. ${emp.totalEarned.toFixed(2)}</td>
+                        <td data-label="Total Ganado" class="text-right" style="font-weight: 700; color: var(--primary)">Bs. ${emp.totalEarned.toFixed(2)}</td>
                         <td class="actions-cell">
                           <div style="display: flex; gap: 0.35rem; justify-content: flex-end;">
                             <button class="btn btn-secondary btn-edit-emp" data-id="${emp.id}" style="width: auto; padding: 0.25rem 0.5rem; font-size: 0.75rem;" title="Editar">
@@ -480,14 +480,14 @@ function renderApp() {
                 <tfoot>
                   <tr>
                     <th>Total General</th>
-                    <td class="text-right">Bs. ${totalBasic.toFixed(2)}</td>
+                    <td data-label="Haber Básico" class="text-right">Bs. ${totalBasic.toFixed(2)}</td>
                     
                     <!-- Dynamic Bonus Sums in footer -->
-                    ${bonusSums.map(sum => `
-                      <td class="text-right">Bs. ${sum.toFixed(2)}</td>
+                    ${bonusSums.map((sum, idx) => `
+                      <td data-label="${bonusCols[idx]}" class="text-right">Bs. ${sum.toFixed(2)}</td>
                     `).join('')}
 
-                    <td class="text-right" style="color: var(--primary); font-weight: 800;">Bs. ${totalEarned.toFixed(2)}</td>
+                    <td data-label="Total Ganado" class="text-right" style="color: var(--primary); font-weight: 800;">Bs. ${totalEarned.toFixed(2)}</td>
                     <td class="actions-cell"></td>
                   </tr>
                 </tfoot>
@@ -529,15 +529,15 @@ function renderApp() {
                         <td>
                           <span style="font-weight: 500;">${emp.name}</span>
                         </td>
-                        <td class="text-right">Bs. ${emp.totalEarned.toFixed(2)}</td>
-                        <td class="text-right" style="color: var(--danger)">Bs. ${emp.aportesLaborales.toFixed(2)}</td>
-                        <td class="text-right" style="font-weight: 500;">Bs. ${emp.sueldoNeto.toFixed(2)}</td>
-                        <td class="text-right" style="color: var(--text-muted)">Bs. ${emp.dosSmn.toFixed(2)}</td>
-                        <td class="text-right">Bs. ${emp.importeSalarial.toFixed(2)}</td>
-                        <td class="text-right" style="color: var(--danger)">Bs. ${emp.rcIvaBase.toFixed(2)}</td>
-                        <td class="text-right" style="color: var(--primary)">Bs. ${emp.deduccionSmn.toFixed(2)}</td>
-                        <td class="text-right" style="color: var(--primary)">Bs. ${emp.form110_13.toFixed(2)}</td>
-                        <td class="text-right" style="font-weight: 700; color: ${emp.rcIvaPagar > 0 ? 'var(--danger)' : 'var(--text-muted)'}">
+                        <td data-label="Total Ganado" class="text-right">Bs. ${emp.totalEarned.toFixed(2)}</td>
+                        <td data-label="Aportes Lab. (12.71%)" class="text-right" style="color: var(--danger)">Bs. ${emp.aportesLaborales.toFixed(2)}</td>
+                        <td data-label="Sueldo Neto" class="text-right" style="font-weight: 500;">Bs. ${emp.sueldoNeto.toFixed(2)}</td>
+                        <td data-label="Menos 2 SMN" class="text-right" style="color: var(--text-muted)">Bs. ${emp.dosSmn.toFixed(2)}</td>
+                        <td data-label="Importe Salarial" class="text-right">Bs. ${emp.importeSalarial.toFixed(2)}</td>
+                        <td data-label="RC-IVA (13%)" class="text-right" style="color: var(--danger)">Bs. ${emp.rcIvaBase.toFixed(2)}</td>
+                        <td data-label="Menos 13% SMN" class="text-right" style="color: var(--primary)">Bs. ${emp.deduccionSmn.toFixed(2)}</td>
+                        <td data-label="Form 110 (13%)" class="text-right" style="color: var(--primary)">Bs. ${emp.form110_13.toFixed(2)}</td>
+                        <td data-label="RC-IVA a Pagar" class="text-right" style="font-weight: 700; color: ${emp.rcIvaPagar > 0 ? 'var(--danger)' : 'var(--text-muted)'}">
                           Bs. ${emp.rcIvaPagar.toFixed(2)}
                         </td>
                       </tr>
@@ -547,15 +547,15 @@ function renderApp() {
                 <tfoot>
                   <tr>
                     <th>Total General</th>
-                    <td class="text-right">Bs. ${totalEarned.toFixed(2)}</td>
-                    <td class="text-right" style="color: var(--danger)">Bs. ${totalAportes.toFixed(2)}</td>
-                    <td class="text-right">Bs. ${totalSueldoNeto.toFixed(2)}</td>
-                    <td class="text-right" style="color: var(--text-muted)">Bs. ${totalDosSmn.toFixed(2)}</td>
-                    <td class="text-right">Bs. ${totalImporteSalarial.toFixed(2)}</td>
-                    <td class="text-right" style="color: var(--danger)">Bs. ${totalRcIvaBase.toFixed(2)}</td>
-                    <td class="text-right" style="color: var(--primary)">Bs. ${totalDeduccionSmn.toFixed(2)}</td>
-                    <td class="text-right" style="color: var(--primary)">Bs. ${totalForm110_13.toFixed(2)}</td>
-                    <td class="text-right" style="color: var(--danger); font-weight: 800;">Bs. ${totalRcIvaPagar.toFixed(2)}</td>
+                    <td data-label="Total Ganado" class="text-right">Bs. ${totalEarned.toFixed(2)}</td>
+                    <td data-label="Aportes Lab. (12.71%)" class="text-right" style="color: var(--danger)">Bs. ${totalAportes.toFixed(2)}</td>
+                    <td data-label="Sueldo Neto" class="text-right">Bs. ${totalSueldoNeto.toFixed(2)}</td>
+                    <td data-label="Menos 2 SMN" class="text-right" style="color: var(--text-muted)">Bs. ${totalDosSmn.toFixed(2)}</td>
+                    <td data-label="Importe Salarial" class="text-right">Bs. ${totalImporteSalarial.toFixed(2)}</td>
+                    <td data-label="RC-IVA (13%)" class="text-right" style="color: var(--danger)">Bs. ${totalRcIvaBase.toFixed(2)}</td>
+                    <td data-label="Menos 13% SMN" class="text-right" style="color: var(--primary)">Bs. ${totalDeduccionSmn.toFixed(2)}</td>
+                    <td data-label="Form 110 (13%)" class="text-right" style="color: var(--primary)">Bs. ${totalForm110_13.toFixed(2)}</td>
+                    <td data-label="RC-IVA a Pagar" class="text-right" style="color: var(--danger); font-weight: 800;">Bs. ${totalRcIvaPagar.toFixed(2)}</td>
                   </tr>
                 </tfoot>
               </table>
@@ -591,10 +591,10 @@ function renderApp() {
                         <td>
                           <span style="font-weight: 500;">${emp.name}</span>
                         </td>
-                        <td class="text-right">Bs. ${emp.totalEarned.toFixed(2)}</td>
-                        <td class="text-right" style="color: var(--danger)">Bs. ${emp.aportesLaborales.toFixed(2)}</td>
-                        <td class="text-right" style="color: var(--danger)">Bs. ${emp.rcIvaPagar.toFixed(2)}</td>
-                        <td class="text-right" style="font-weight: 700; color: var(--primary)">
+                        <td data-label="Total Ganado" class="text-right">Bs. ${emp.totalEarned.toFixed(2)}</td>
+                        <td data-label="Aportes Lab. (12.71%)" class="text-right" style="color: var(--danger)">Bs. ${emp.aportesLaborales.toFixed(2)}</td>
+                        <td data-label="RC-IVA a Pagar" class="text-right" style="color: var(--danger)">Bs. ${emp.rcIvaPagar.toFixed(2)}</td>
+                        <td data-label="Líquido Pagable" class="text-right" style="font-weight: 700; color: var(--primary)">
                           Bs. ${emp.liquidoPagable.toFixed(2)}
                         </td>
                       </tr>
@@ -604,10 +604,10 @@ function renderApp() {
                 <tfoot>
                   <tr>
                     <th>Total General</th>
-                    <td class="text-right">Bs. ${totalEarned.toFixed(2)}</td>
-                    <td class="text-right" style="color: var(--danger)">Bs. ${totalAportes.toFixed(2)}</td>
-                    <td class="text-right" style="color: var(--danger)">Bs. ${totalRcIvaPagar.toFixed(2)}</td>
-                    <td class="text-right" style="color: var(--primary); font-weight: 800;">Bs. ${totalLiquido.toFixed(2)}</td>
+                    <td data-label="Total Ganado" class="text-right">Bs. ${totalEarned.toFixed(2)}</td>
+                    <td data-label="Aportes Lab. (12.71%)" class="text-right" style="color: var(--danger)">Bs. ${totalAportes.toFixed(2)}</td>
+                    <td data-label="RC-IVA a Pagar" class="text-right" style="color: var(--danger)">Bs. ${totalRcIvaPagar.toFixed(2)}</td>
+                    <td data-label="Líquido Pagable" class="text-right" style="color: var(--primary); font-weight: 800;">Bs. ${totalLiquido.toFixed(2)}</td>
                   </tr>
                 </tfoot>
               </table>
@@ -641,8 +641,8 @@ function renderApp() {
                         <td>
                           <span style="font-weight: 500;">${emp.name}</span>
                         </td>
-                        <td class="text-right">Bs. ${emp.totalEarned.toFixed(2)}</td>
-                        <td class="text-right" style="font-weight: 700; color: var(--primary)">
+                        <td data-label="Total Ganado" class="text-right">Bs. ${emp.totalEarned.toFixed(2)}</td>
+                        <td data-label="Aporte Patronal (32.37%)" class="text-right" style="font-weight: 700; color: var(--primary)">
                           Bs. ${emp.aportePatronal.toFixed(2)}
                         </td>
                       </tr>
@@ -652,8 +652,8 @@ function renderApp() {
                 <tfoot>
                   <tr>
                     <th>Total General</th>
-                    <td class="text-right">Bs. ${totalEarned.toFixed(2)}</td>
-                    <td class="text-right" style="color: var(--primary); font-weight: 800;">Bs. ${totalPatronal.toFixed(2)}</td>
+                    <td data-label="Total Ganado" class="text-right">Bs. ${totalEarned.toFixed(2)}</td>
+                    <td data-label="Aporte Patronal (32.37%)" class="text-right" style="color: var(--primary); font-weight: 800;">Bs. ${totalPatronal.toFixed(2)}</td>
                   </tr>
                 </tfoot>
               </table>
@@ -682,7 +682,7 @@ function renderApp() {
             </div>
 
             <div class="payroll-container">
-              <table class="payroll-table" style="font-family: var(--font-sans);">
+              <table class="payroll-table journal-table" style="font-family: var(--font-sans);">
                 <thead>
                   <tr>
                     <th>Detalle / Cuentas</th>
